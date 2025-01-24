@@ -5,7 +5,7 @@ import logging
 from dataclasses import dataclass
 import yaml
 import os
-from LSTMManager import LSTMManager
+from models.LSTMManager import LSTMManager
 
 @dataclass
 class Position:

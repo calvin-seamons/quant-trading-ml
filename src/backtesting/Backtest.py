@@ -3,8 +3,8 @@ import os
 import backtrader as bt
 import pandas as pd
 from typing import Dict, List, Optional
-from src.backtesting.BacktestDataManager import BacktestDataManager
-from src.features.FactorPipeline import FactorPipeline
+from backtesting.BacktestDataManager import BacktestDataManager
+from features.FactorPipeline import FactorPipeline
 # from .trading_strategy import TradingStrategy
 
 class YahooDataFeed(bt.feeds.PandasData):
