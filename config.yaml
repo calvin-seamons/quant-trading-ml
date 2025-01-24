@@ -1,0 +1,14 @@
+cache:
+  cache_expiry_days: 1
+  compression_type: parquet
+  max_memory_cache_size: 1000
+  update_frequency: 1d
+download:
+  batch_size: 100
+  max_retries: 3
+  retry_delay: 5
+  timeout: 30
+validation:
+  max_missing_pct: 0.1
+  min_data_points: 50
+  price_threshold: 0.01
