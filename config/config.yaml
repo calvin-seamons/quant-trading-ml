@@ -1,0 +1,151 @@
+# Paths Configuration
+paths:
+  base_dir: "./backtesting"
+  data_dir: "./backtesting/data"
+  model_dir: "./backtesting/models"
+  results_dir: "./backtesting/results"
+  log_dir: "./backtesting/logs"
+  db_path: "data/db/market_data.db"
+  cache_dir: "data/cache"
+  metadata_dir: "data/cache/metadata"
+  daily_data_dir: "data/cache/daily_data"
+  temp_dir: "data/cache/temp/downloads"
+
+# Download Configuration
+download:
+  batch_size: 5  # ThreadPoolExecutor max_workers setting
+  max_retries: 3  # Number of retry attempts for failed downloads
+  retry_delay: 5  # Delay in seconds between retry attempts
+
+# Cache Configuration
+cache:
+  max_memory_cache_size: 1000  # Maximum number of symbols to keep in memory cache
+  cache_expiry_days: 30  # How long to consider cached data valid
+
+# Factor Pipeline Configuration
+factor_pipeline:
+  model_weight: 0.7
+  mean_reversion_weight: 0.3
+  min_score_threshold: 0.0
+
+# Portfolio Strategy Parameters
+portfolio_strategy:
+  max_position_size: 0.1  # 10% maximum position size
+  sector_exposure_limit: 0.3
+  max_leverage: 1.0
+
+# Validation Parameters
+validation:
+  price_threshold: 5.0  # Minimum price filter
+  volume_threshold: 100000  # Minimum daily volume
+  data_quality_threshold: 0.95
+  max_missing_pct: 0.1  # Maximum percentage of missing values allowed
+  min_data_points: 20  # Minimum number of data points required for valid data
+
+# LSTM Model Configuration
+model_params:
+  sequence_length: 20  # For use in data preparation
+  input_size: 78  # Must match the number of features
+  hidden_size: 128
+  num_layers: 2
+  dropout: 0.2
+  bidirectional: true
+  attention_heads: 4
+  use_layer_norm: true
+  residual_connections: true
+  confidence_threshold: 0.6
+  prediction_horizon: 5  # Days ahead to predict
+  movement_threshold: 0.01  # Minimum price move to consider
+
+# Feature Engineering Parameters
+feature_params:
+  min_samples: 20
+  price_features:
+    ma_windows: [5, 10, 21, 50]
+    channel_windows: [10, 20]
+    
+  return_features:
+    return_windows: [1, 3, 5, 10, 21]
+    momentum_windows: [5, 10, 21]
+    max_drawdown_window: 252
+    
+  momentum_features:
+    rsi_windows: [6, 14, 28]
+    macd_params:
+      fast: 12
+      slow: 26
+      signal: 9
+    stoch_params:
+      k_period: 14
+      d_period: 3
+      smooth_k: 3
+    adx_period: 14
+    
+  volatility_features:
+    atr_period: 14
+    bollinger_windows: [20, 40]
+    volatility_windows: [5, 21, 63]
+    regime_lookback: 252
+    
+  volume_features:
+    ma_windows: [5, 10, 21]
+    obv_ma_period: 21
+    volume_breakout_std: 2
+    
+# Training Parameters
+training_params:
+  batch_size: 32
+  learning_rate: 0.001
+  epochs: 100
+  validation_ratio: 0.2
+  gap_days: 5
+  optimizer:
+    type: "adam"
+    weight_decay: 0.0001
+  scheduler:
+    type: "reduce_lr_on_plateau"
+    patience: 5
+    factor: 0.5
+
+# Early Stopping Parameters
+early_stopping_params:
+  patience: 10
+  min_delta: 0.001
+  monitor: "val_loss"
+
+# Prediction Parameters
+prediction_params:
+  confidence_threshold: 0.6
+  volatility_threshold: 0.25
+  regime_factors:
+    trending_up: 1.1
+    trending_down: 1.1
+    ranging: 0.9
+    high_volatility: 0.8
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  handlers:
+    file:
+      filename: "trading_system.log"
+      mode: "a"
+      max_bytes: 10485760  # 10MB
+      backup_count: 5
+
+optimization_params:
+  validation:
+    n_splits: 5
+    gap: 5
+  coarse_search:
+    n_trials: 100
+  feature_optimization:
+    n_trials: 50
+  fine_tuning:
+    n_trials: 200
+  resources:
+    n_parallel: 4
+  metrics:
+    primary: 'sharpe_ratio'
+
