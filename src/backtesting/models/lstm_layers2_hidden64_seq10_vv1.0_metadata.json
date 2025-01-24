@@ -1,0 +1,10 @@
+{
+    "version": "v1.0",
+    "training_date": "2024-12-22T19:19:27.187165",
+    "model_type": "LSTM",
+    "parameters": {
+        "sequence_length": 10,
+        "hidden_size": 64,
+        "num_layers": 2
+    }
+}

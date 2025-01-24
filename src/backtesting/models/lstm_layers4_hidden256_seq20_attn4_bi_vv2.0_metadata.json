@@ -1,0 +1,342 @@
+{
+    "version": "v2.0",
+    "training_date": "2024-12-22T22:24:35.385243",
+    "model_type": "ImprovedLSTM",
+    "config_fingerprint": "b56ba2d492261eb9b2831ac36796b049e39289c6f9bb979e77026cb6f5ab93ee",
+    "parameters": {
+        "architecture": {
+            "input_size": 49,
+            "hidden_size": 256,
+            "num_layers": 4,
+            "bidirectional": true,
+            "attention_heads": 4,
+            "use_layer_norm": true,
+            "residual_connections": true
+        },
+        "sequence_length": 20,
+        "features": {
+            "technical": {
+                "moving_averages": [
+                    {
+                        "type": "SMA",
+                        "periods": [
+                            5,
+                            10,
+                            20,
+                            50,
+                            200
+                        ]
+                    },
+                    {
+                        "type": "EMA",
+                        "periods": [
+                            12,
+                            26
+                        ]
+                    }
+                ],
+                "momentum": {
+                    "rsi": {
+                        "period": 14
+                    },
+                    "macd": {
+                        "fast_period": 12,
+                        "slow_period": 26,
+                        "signal_period": 9
+                    },
+                    "stochastic": {
+                        "k_period": 14,
+                        "d_period": 3
+                    }
+                },
+                "volatility": {
+                    "bollinger_bands": {
+                        "period": 20,
+                        "std_dev": 2
+                    },
+                    "atr": {
+                        "period": 14
+                    }
+                },
+                "volume": {
+                    "obv": true,
+                    "volume_ma": {
+                        "periods": [
+                            10,
+                            20
+                        ]
+                    }
+                }
+            },
+            "price": {
+                "returns": {
+                    "periods": [
+                        1,
+                        5,
+                        10,
+                        20
+                    ]
+                },
+                "log_returns": true,
+                "rolling_stats": {
+                    "windows": [
+                        5,
+                        10,
+                        20
+                    ],
+                    "metrics": [
+                        "mean",
+                        "std",
+                        "skew"
+                    ]
+                }
+            },
+            "sequence": {
+                "lookback_window": 10,
+                "target_lookahead": 5
+            },
+            "preprocessing": {
+                "scaling": {
+                    "method": "standard"
+                },
+                "outlier_threshold": 3.0,
+                "fill_method": "ffill",
+                "minimum_periods": 20
+            }
+        }
+    },
+    "feature_engineering": {
+        "logging": {
+            "level": "INFO",
+            "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+            "file": "trading.log"
+        },
+        "paths": {
+            "base_dir": "./backtesting",
+            "data_dir": "./backtesting/data",
+            "model_dir": "./backtesting/models",
+            "results_dir": "./backtesting/results",
+            "log_dir": "./backtesting/logs",
+            "db_path": "data/db/market_data.db",
+            "cache_dir": "data/cache",
+            "metadata_dir": "data/cache/metadata",
+            "daily_data_dir": "data/cache/daily_data",
+            "temp_dir": "data/cache/temp/downloads"
+        },
+        "cache": {
+            "max_memory_cache_size": 1000,
+            "cache_expiry_days": 1,
+            "update_frequency": "1d",
+            "compression_type": "parquet"
+        },
+        "download": {
+            "max_retries": 3,
+            "retry_delay": 5,
+            "batch_size": 100,
+            "timeout": 30
+        },
+        "validation": {
+            "min_data_points": 50,
+            "max_missing_pct": 0.1,
+            "price_threshold": 5.0
+        },
+        "factor_pipeline": {
+            "model_weight": 0.5,
+            "mean_reversion_weight": 0.5,
+            "min_score_threshold": 0.1
+        },
+        "portfolio_strategy": {
+            "max_position_size": 0.1
+        },
+        "model": {
+            "version": "v2.0",
+            "type": "ImprovedLSTM",
+            "input_size": 49,
+            "sequence_length": 20,
+            "hidden_size": 256,
+            "num_layers": 4,
+            "bidirectional": true,
+            "attention_heads": 4,
+            "use_layer_norm": true,
+            "residual_connections": true,
+            "batch_size": 16,
+            "num_epochs": 100,
+            "learning_rate": 0.001,
+            "train_test_split": 0.8,
+            "early_stopping_patience": 10,
+            "min_delta": 0.001,
+            "dropout": 0.3,
+            "weight_decay": 0.01,
+            "validation": {
+                "temporal_checks": {
+                    "enabled": true,
+                    "max_window_size": 21
+                },
+                "feature_checks": {
+                    "enabled": true,
+                    "correlation_threshold": 0.9,
+                    "suspicious_window": 20
+                },
+                "direction_accuracy_threshold": 0.55,
+                "sharpe_ratio_threshold": 1.0,
+                "ic_threshold": 0.05
+            },
+            "lr_scheduler": {
+                "type": "onecycle",
+                "max_lr": 0.01,
+                "pct_start": 0.3,
+                "anneal_strategy": "cos"
+            }
+        },
+        "features": {
+            "technical": {
+                "moving_averages": [
+                    {
+                        "type": "SMA",
+                        "periods": [
+                            5,
+                            10,
+                            20,
+                            50,
+                            200
+                        ]
+                    },
+                    {
+                        "type": "EMA",
+                        "periods": [
+                            12,
+                            26
+                        ]
+                    }
+                ],
+                "momentum": {
+                    "rsi": {
+                        "period": 14
+                    },
+                    "macd": {
+                        "fast_period": 12,
+                        "slow_period": 26,
+                        "signal_period": 9
+                    },
+                    "stochastic": {
+                        "k_period": 14,
+                        "d_period": 3
+                    }
+                },
+                "volatility": {
+                    "bollinger_bands": {
+                        "period": 20,
+                        "std_dev": 2
+                    },
+                    "atr": {
+                        "period": 14
+                    }
+                },
+                "volume": {
+                    "obv": true,
+                    "volume_ma": {
+                        "periods": [
+                            10,
+                            20
+                        ]
+                    }
+                }
+            },
+            "price": {
+                "returns": {
+                    "periods": [
+                        1,
+                        5,
+                        10,
+                        20
+                    ]
+                },
+                "log_returns": true,
+                "rolling_stats": {
+                    "windows": [
+                        5,
+                        10,
+                        20
+                    ],
+                    "metrics": [
+                        "mean",
+                        "std",
+                        "skew"
+                    ]
+                }
+            },
+            "sequence": {
+                "lookback_window": 10,
+                "target_lookahead": 5
+            },
+            "preprocessing": {
+                "scaling": {
+                    "method": "standard"
+                },
+                "outlier_threshold": 3.0,
+                "fill_method": "ffill",
+                "minimum_periods": 20
+            }
+        },
+        "mean_reversion": {
+            "lookback": 20,
+            "z_score_threshold": 1.5
+        },
+        "hyperparameter_search": {
+            "hidden_size": [
+                128,
+                256,
+                512
+            ],
+            "num_layers": [
+                1,
+                2,
+                3
+            ],
+            "dropout": [
+                0.1,
+                0.2,
+                0.3
+            ],
+            "attention_heads": [
+                2,
+                4,
+                8
+            ],
+            "bidirectional": [
+                true,
+                false
+            ],
+            "use_layer_norm": [
+                true
+            ],
+            "residual_connections": [
+                true
+            ],
+            "sequence_length": [
+                5,
+                10,
+                20
+            ],
+            "batch_size": [
+                32,
+                64,
+                128
+            ],
+            "learning_rate": [
+                0.0001,
+                0.001,
+                0.01
+            ],
+            "weight_decay": [
+                0.001,
+                0.01,
+                0.1
+            ],
+            "lookback_buffer": 10,
+            "optimization_tool": "optuna",
+            "max_trials": 50,
+            "direction": "minimize"
+        }
+    }
+}

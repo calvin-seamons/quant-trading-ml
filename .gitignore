@@ -1,2 +1,1 @@
-backtesting/models/*
-data/cache/*
+src/data/cache/daily_data/*
