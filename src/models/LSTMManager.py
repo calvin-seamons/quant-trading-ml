@@ -7,10 +7,10 @@ import logging
 from pathlib import Path
 import numpy as np
 from typing import Tuple
-from LSTM import DirectionalLSTM
-from src.features.FeatureEngineer import FeatureEngineering
-from LSTM import LSTMConfig
-from src.models.HyperparameterOptimizer import HyperparameterOptimizer
+from models.LSTM import DirectionalLSTM
+from features.FeatureEngineer import FeatureEngineering
+from models.LSTM import LSTMConfig
+from models.HyperparameterOptimizer import HyperparameterOptimizer
 
 CONFIG_PATH = Path("config/config.yaml")
 

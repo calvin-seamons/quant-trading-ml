@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from enum import Enum
 
 # Import feature group classes
-from src.features.Features import PriceFeatures, ReturnFeatures, MomentumFeatures, VolatilityFeatures, VolumeFeatures
+from features.Features import PriceFeatures, ReturnFeatures, MomentumFeatures, VolatilityFeatures, VolumeFeatures
 
 class ScalingMethod(Enum):
     STANDARD = "standard"
